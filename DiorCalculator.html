@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gior Calculator💕</title>
+    
+    <!-- Importando a fonte Momentz local -->
+    <style>
+        @font-face {
+            font-family: 'Momentz';
+            src: url('Momentz-Regular.ttf');  /* Caminho para o arquivo da fonte */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* Estilos Globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Momentz', sans-serif;  /* Usando Momentz */
+            background-color: #282424;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .calculator {
+            background-color: #FFCBDB;
+            width: 400px;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Título */
+        .title {
+            font-size: 30px;
+            text-align: center;
+            color: #FF007F;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        /* Visor */
+        .display {
+            background-color: #351a29;
+            color: #FFCBDB;
+            font-size: 50px;
+            text-align: right;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Botões */
+        .button {
+            font-family: 'Momentz', sans-serif; /* Aplicando a fonte Momentz nos botões */
+            background-color: #FFCBDB;
+            color: #351a29;
+            font-size: 30px;
+            border: none;
+            padding: 25px;
+            border-radius: 15px;
+            transition: background-color 0.2s, transform 0.1s;
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:hover {
+            background-color: #FF007F;
+            transform: scale(1.05);
+        }
+
+        .button.special {
+            background-color: #f155ba;
+        }
+
+        .button.special:hover {
+            background-color: #d14099;
+        }
+
+        /* Layout dos botões */
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        /* Espessura do botão de Backspace */
+        .button-backspace {
+            grid-column: span 2;
+        }
+
+        /* Mensagem Especial */
+        .message {
+            font-size: 70px;
+            text-align: center;
+            color: #FF007F;
+            font-weight: 600;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <div class="title">Gior Calculator</div>
+        <div class="display" id="display">0</div>
+
+        <div class="button-container">
+            <!-- Mudei a posição do botão de divisão aqui -->
+            <button class="button special" onclick="appendValue('/')">÷</button>
+
+            <button class="button button-backspace" id="backspace">⮐</button>
+            <button class="button" onclick="clearDisplay()">C</button>
+            <button class="button special" onclick="appendValue('*')">x</button>
+
+            <button class="button" onclick="appendValue('7')">7</button>
+            <button class="button" onclick="appendValue('8')">8</button>
+            <button class="button" onclick="appendValue('9')">9</button>
+            <button class="button special" onclick="appendValue('-')">-</button>
+
+            <button class="button" onclick="appendValue('4')">4</button>
+            <button class="button" onclick="appendValue('5')">5</button>
+            <button class="button" onclick="appendValue('6')">6</button>
+            <button class="button special" onclick="appendValue('+')">+</button>
+
+            <button class="button" onclick="appendValue('1')">1</button>
+            <button class="button" onclick="appendValue('2')">2</button>
+            <button class="button" onclick="appendValue('3')">3</button>
+            <button class="button special" onclick="appendValue('%')">%</button>
+
+            <button class="button" onclick="appendValue('0')">0</button>
+            <button class="button" onclick="appendValue('.')">.</button>
+            <button class="button special" id="equals">=</button>
+        </div>
+
+        <div class="message" id="message">EU TE AMO</div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let message = document.getElementById('message');
+        let currentInput = "";
+
+        function appendValue(value) {
+            if (currentInput === "0" && value !== "%") {
+                currentInput = "";
+            }
+            currentInput += value;
+            display.textContent = currentInput;
+        }
+
+        function clearDisplay() {
+            currentInput = "";
+            display.textContent = "0";
+        }
+
+        function backspace() {
+            currentInput = currentInput.slice(0, -1);
+            display.textContent = currentInput || "0";
+        }
+
+        function calculate() {
+            try {
+                if (currentInput === "9/12/23") {
+                    display.textContent = "EU TE AMO";
+                } else {
+                    let result = eval(currentInput.replace('%', '/100')); // Calculando com porcentagem
+                    display.textContent = result;
+                }
+            } catch (e) {
+                display.textContent = "Erro";
+            }
+            currentInput = "";
+        }
+
+        document.getElementById('equals').addEventListener('click', calculate);
+        document.getElementById('backspace').addEventListener('click', backspace);
+    </script>
+
+</body>
+</html>
